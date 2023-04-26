@@ -1,14 +1,11 @@
 ### Step 1:
-```docker-compose up -d```
+Copy gradle project into **tests/** folder.
 
 ### Step 2:
-Copy gradle project into **tests/** folder
-
-### Step 3:
 ```./start.sh```
 
-### Step 4:
+### Step 3:
 ```cd tests/gradle_project_name```
 
-### Step 5:
+### Step 4:
 ```gradle test```
