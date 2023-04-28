@@ -9,12 +9,6 @@ RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt-get update && \
     apt-get install -y openjdk-8-jdk
 
-# Install Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && \
-    apt-get update && \
-    apt-get install -y google-chrome-stable
-
 # Install Gradle
 ENV GRADLE_VERSION=7.4
 RUN wget -q https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip && \
@@ -32,13 +26,18 @@ ENV PATH=$PATH:$GRADLE_HOME/bin:$JAVA_HOME/bin
 
 RUN apt-get install -y sudo
 
-RUN username="selenium" && addgroup -gid 1000 $username && mkdir -p "/home/$username" && cp -a /root/. "/home/$username" && adduser --uid 1000 --home "/home/$username" --gid 1000 --quiet --disabled-password --gecos "Mr. $username User,,,"  $username  && usermod -p "Q4FXCUcqOWdDE" $username && sudo usermod -a -G sudo $username && chown -R "$username.$username" "/home/$username"
+RUN username="selenium" && \
+    addgroup -gid 1000 $username && \
+    mkdir -p "/home/$username" && \
+    cp -a /root/. "/home/$username" && \
+    adduser --uid 1000 --home "/home/$username" --gid 1000 --quiet --disabled-password --gecos "Mr. $username User,,,"  $username && \
+    usermod -p "Q4FXCUcqOWdDE" $username && \
+    sudo usermod -a -G sudo $username && \
+    chown -R "$username.$username" "/home/$username"
 
 ENV TZ=Europe/Budapest
 ENV DEBIAN_FRONTEND=noninteractive
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-RUN apt-get install x11vnc xvfb -y
 
 WORKDIR /home/selenium/
 ENV HOME=/home/selenium/
