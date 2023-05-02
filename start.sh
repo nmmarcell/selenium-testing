@@ -1,4 +1,5 @@
 #!/bin/sh
 
-docker-compose up -d
-docker-compose run --rm ubuntu
+docker compose up
+docker exec -it -u selenium ubuntu bash
+
