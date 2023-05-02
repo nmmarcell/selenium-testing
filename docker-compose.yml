@@ -3,7 +3,7 @@ version: "3"
 services:
   ubuntu:
     build: .
-    container_name: ubuntu
+    container_name: selenium_testenv
     stdin_open: true
     tty: true
     volumes:

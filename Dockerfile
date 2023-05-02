@@ -24,14 +24,14 @@ ENV GRADLE_HOME=/opt/gradle
 # Add Gradle and Java to PATH
 ENV PATH=$PATH:$GRADLE_HOME/bin:$JAVA_HOME/bin
 
-RUN apt-get install -y sudo
+RUN apt-get update && apt-get install -y sudo
 
 RUN username="selenium" && \
     addgroup -gid 1000 $username && \
     mkdir -p "/home/$username" && \
     cp -a /root/. "/home/$username" && \
     adduser --uid 1000 --home "/home/$username" --gid 1000 --quiet --disabled-password --gecos "Mr. $username User,,,"  $username && \
-    usermod -p "Q4FXCUcqOWdDE" $username && \
+    usermod -p "Q4oQmhJG0ctkM" $username && \
     sudo usermod -a -G sudo $username && \
     chown -R "$username.$username" "/home/$username"
 
@@ -41,5 +41,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /home/selenium/
 ENV HOME=/home/selenium/
+
+USER selenium
 
 CMD ["/bin/bash"]
